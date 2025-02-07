@@ -1,14 +1,20 @@
 import asyncio
 import re
 from datetime import datetime, timedelta
-from aiogram import Bot, Dispatcher, types, Router
+from aiogram import Bot, Dispatcher, types, Router, F
 from aiogram.filters import Command
+
+import keybord as kb
 
 from config import TOKEN
 
 router = Router()
 
 user_tasks = {}
+
+@router.message(Command("start"))
+async def cmd_start(message: types.Message):
+    await message.answer('Привет! Я бот напоминаний. Я буду тебе напоминать твои значимые даты.\nНажми "Установить напоминание" чтобы воспользоваться мной.', reply_markup=kb.main)
 
 async def send_reminder(bot, user_id, text):
     await bot.send_message(user_id, f"⏰ Напоминание: {text}")
@@ -32,10 +38,10 @@ async def reminder_task(bot, user_id, delay, text):
     await send_reminder(bot, user_id, text)
     user_tasks.pop(user_id, None)
 
-@router.message(Command("start"))
-async def cmd_start(message: types.Message):
-    await message.answer("Привет! Отправь время и текст напоминания в формате: ЧЧ:ММ Текст.")
-
+@router.message(F.text == 'Установить напоминание')
+async def cmd_set(message: types.Message):
+    await message.answer('Установить время(ЧЧ:ММ) и текст.\nПример: 12:30 Покушать')
+    
 @router.message()
 async def handle_message(message: types.Message):
     user_id = message.from_user.id
