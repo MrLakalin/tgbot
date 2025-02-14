@@ -69,9 +69,9 @@
 ---
 
 ## Структура проекта
-telegram-reminder-bot/
+`telegram-reminder-bot/
 ├── run.py # Главный файл бота
 ├── reminders.json # Файл для хранения напоминаний
 ├── keyboard.py # Файл с определением клавиатур
 ├── set.py # Файл со всеми функциями
-└── README.md # Этот файл
+└── README.md # Этот файл`
