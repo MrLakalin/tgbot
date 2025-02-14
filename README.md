@@ -1,6 +1,6 @@
 # Telegram Reminder Bot
 
-## [![GitHub](https://img.shields.io/badge/GitHub-Repo-blue.svg)](https://github.com/yourusername/telegram-reminder-bot) [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/) [![aiogram](https://img.shields.io/badge/aiogram-3.x-green.svg)](https://docs.aiogram.dev/)
+## [![GitHub](https://img.shields.io/badge/GitHub-Repo-blue.svg)]https://github.com/MrLakalin/tgbot [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/) [![aiogram](https://img.shields.io/badge/aiogram-3.x-green.svg)](https://docs.aiogram.dev/)
 
 ### Простой и удобный бот для Telegram, который помогает вам устанавливать напоминания. Бот сохраняет ваши напоминания между перезапусками и позволяет управлять ими через интуитивный интерфейс.
 
