@@ -618,40 +618,50 @@ async def process_select_reminder(callback_query: types.CallbackQuery):
 @router.callback_query(lambda c: c.data == "select_all_del")
 async def process_select_all(callback_query: types.CallbackQuery):
     keyboard = list(callback_query.message.reply_markup.inline_keyboard)
+    modified = False
     
     for row_index, row in enumerate(keyboard):
         for btn_index, btn in enumerate(row):
             if btn.callback_data.startswith('select_del_'):
                 current_text = btn.text
                 if '☐' in current_text:
+                    modified = True
                     new_text = current_text.replace('☐', '☑')
                     keyboard[row_index][btn_index] = types.InlineKeyboardButton(
                         text=new_text,
                         callback_data=btn.callback_data
                     )
     
-    await callback_query.message.edit_reply_markup(
-        reply_markup=types.InlineKeyboardMarkup(inline_keyboard=keyboard)
-    )
+    if modified:
+        await callback_query.message.edit_reply_markup(
+            reply_markup=types.InlineKeyboardMarkup(inline_keyboard=keyboard)
+        )
+    else:
+        await callback_query.answer("Все напоминания уже выбраны")
 
 @router.callback_query(lambda c: c.data == "deselect_all_del")
 async def process_deselect_all(callback_query: types.CallbackQuery):
     keyboard = list(callback_query.message.reply_markup.inline_keyboard)
+    modified = False
     
     for row_index, row in enumerate(keyboard):
         for btn_index, btn in enumerate(row):
             if btn.callback_data.startswith('select_del_'):
                 current_text = btn.text
                 if '☑' in current_text:
+                    modified = True
                     new_text = current_text.replace('☑', '☐')
                     keyboard[row_index][btn_index] = types.InlineKeyboardButton(
                         text=new_text,
                         callback_data=btn.callback_data
                     )
     
-    await callback_query.message.edit_reply_markup(
-        reply_markup=types.InlineKeyboardMarkup(inline_keyboard=keyboard)
-    )
+    if modified:
+        await callback_query.message.edit_reply_markup(
+            reply_markup=types.InlineKeyboardMarkup(inline_keyboard=keyboard)
+        )
+    else:
+        await callback_query.answer("Все напоминания уже сняты")
 
 @router.callback_query(lambda c: c.data == "confirm_delete")
 async def process_confirm_delete(callback_query: types.CallbackQuery):
