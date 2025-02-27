@@ -395,7 +395,14 @@ async def process_back_to_reminders(callback_query: types.CallbackQuery):
 @router.callback_query(lambda c: c.data.startswith('calendar_day_'))
 async def process_calendar_day(callback_query: types.CallbackQuery):
     _, _, year, month, day = callback_query.data.split('_')
-    selected_date = f"{day.zfill(2)}.{month.zfill(2)}.{year}"
+    selected_date = datetime(int(year), int(month), int(day))
+    current_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    
+    if selected_date < current_date:
+        await callback_query.answer("❌ Нельзя выбрать дату в прошлом!", show_alert=True)
+        return
+        
+    formatted_date = f"{day.zfill(2)}.{month.zfill(2)}.{year}"
     user_id = str(callback_query.from_user.id)
     
     current_action = waiting_for.get(int(user_id))
@@ -405,14 +412,14 @@ async def process_calendar_day(callback_query: types.CallbackQuery):
         rem_type = current_action[1] if isinstance(current_action, tuple) else 'default'
     
     await callback_query.message.edit_text(
-        f"Выбрана дата: {selected_date}\nВыберите час:",
+        f"Выбрана дата: {formatted_date}\nВыберите час:",
         reply_markup=create_time_keyboard()
     )
     
     if current_action == 'edit_calendar':
-        waiting_for[int(user_id)] = ('edit_time', selected_date, rem_type)
+        waiting_for[int(user_id)] = ('edit_time', formatted_date, rem_type)
     else:
-        waiting_for[int(user_id)] = ('set_time', selected_date, rem_type)
+        waiting_for[int(user_id)] = ('set_time', formatted_date, rem_type)
 
 @router.callback_query(lambda c: c.data.startswith('time_'))
 async def process_time_selection(callback_query: types.CallbackQuery):
