@@ -2,7 +2,7 @@
 
 ## [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/) [![aiogram](https://img.shields.io/badge/aiogram-3.x-green.svg)](https://docs.aiogram.dev/)
 
-### Простой и удобный бот для Telegram, который помогает вам устанавливать напоминания. Бот сохраняет ваши напоминания и позволяет отправлять в нужный момент. Бот @NapomniTimeBot
+### Простой и удобный бот для Telegram, который помогает вам устанавливать напоминания. Бот сохраняет ваши напоминания и позволяет отправлять в нужный момент. Бот @NapomniTimeBot @YttyTime_bot
 
 ---
 
